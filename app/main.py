@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers.tasks import router as tasks_router
+from app.services import email_callback
 
 
 app = FastAPI(title="Task API")
