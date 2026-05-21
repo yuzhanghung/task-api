@@ -43,8 +43,12 @@ def get_tasks():
 
 @app.post("/tasks")
 def create_task(task: dict):
-    response = supabase.table("tasks").insert(task).execute()
-    return response.data
+    try: 
+        response = supabase.table("tasks").insert(task).execute()
+        return response.data
+    except Exception as e:
+        return {"error": str(e)}
+
 
 @app.patch("/tasks/{task_id}")
 def update_task(task_id: str, updates: dict):
