@@ -11,7 +11,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -22,6 +22,11 @@ supabase = create_client(
 )
 
 print("SUPABASE_URL:", os.getenv("SUPABASE_URL"))
+
+@app.get("/")
+def home():
+    return {"message": "Task API is running"}
+
 
 @app.get("/tasks")
 def get_tasks():
