@@ -1,6 +1,7 @@
 from starlette.concurrency import run_in_threadpool
 from app.db.supabase import supabase
 from app.models.task import TaskCreate, TaskUpdate
+from app.services.webhook_service import send_webhook
 
 async def get_tasks():
     def query():
@@ -14,7 +15,11 @@ async def create_task(task: TaskCreate):
         return supabase.table("tasks").insert(task.model_dump()).execute()
     
     response = await run_in_threadpool(query)
-    return response.data
+    data = response.data
+
+    await send_webhook("task.created", data)
+    return data
+
 
 async def update_task(task_id: str, updates: TaskUpdate):
     data = updates.model_dump(exclude_none=True)
