@@ -12,7 +12,7 @@ async def send_email_test(task_title: str):
             },
             json={
                 "from": "onboarding@resend.dev",
-                "to": [TEST_EMAIL],
+                "to": TEST_EMAIL,
                 "subject": "Task completed ✅",
                 "html": f"<p>You completed: {task_title}</p>"
             }
